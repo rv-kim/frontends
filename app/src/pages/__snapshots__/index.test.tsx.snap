@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index Component snapshots_01 1`] = `
+<div>
+  <Link
+    href="/test"
+  >
+    <a>
+      link to test
+    </a>
+  </Link>
+  <hr />
+  <Sample
+    color="green"
+    text="good, bye"
+  />
+  <hr />
+  <Connect(Counter) />
+</div>
+`;

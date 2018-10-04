@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Component snapshots_01 1`] = `
+<div>
+  <Link
+    href="/index"
+  >
+    <a>
+      link to top 
+      ..
+    </a>
+  </Link>
+  <hr />
+</div>
+`;

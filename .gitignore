@@ -1,0 +1,4 @@
+/app/coverage
+/app/node_modules
+/app/out
+/app/src/.next
