@@ -1,16 +1,14 @@
 import createSagaMiddleware, {SagaMiddleware} from 'redux-saga'
+import * as Sagas from './sagas'
 
-import CommonSaga from './sagas/common'
-import EventSearchSaga from './sagas/event-search'
+const sagaMiddleware = createSagaMiddleware()
 
-export default () => {
-  const sagaMiddleware = createSagaMiddleware()
-
-  return {
-    get: (): SagaMiddleware<{}> => sagaMiddleware,
-    runs: (): void => {
-      sagaMiddleware.run(CommonSaga)
-      sagaMiddleware.run(EventSearchSaga)
-    },
-  }
+export default {
+  get: (): SagaMiddleware<{}> => sagaMiddleware,
+  run: (saga) => sagaMiddleware.run(saga),
+  start: (): void => {
+    for(let saga in Sagas) {
+      sagaMiddleware.run(Sagas[saga])
+    }
+  },
 }

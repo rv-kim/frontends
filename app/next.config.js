@@ -1,2 +1,15 @@
 const withTypescript = require('@zeit/next-typescript')
-module.exports = withTypescript()
+const withLess = require('@zeit/next-less')
+
+if (typeof require !== 'undefined') {
+  require.extensions['.less'] = (file) => {}
+}
+
+module.exports = withTypescript(withLess({
+  lessLoaderOptions: {
+    javascriptEnabled: true,
+    modifyVars: {
+      'primary-color': '#822433',
+    },
+  },
+}))

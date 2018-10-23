@@ -5,10 +5,11 @@ import { Reducer } from 'redux'
 
 export const SessionType = {
   INIT_START: 'session/init-start',
-  INIT_END:   'session/init-start',
+  INIT_END:   'session/init-end',
 }
 
 export interface SessionState {
+  language: string
   organization: string
   areaCode: string
   areaName: string
@@ -20,6 +21,7 @@ export interface SessionState {
 // Initial states
 
 const initialState: SessionState = {
+  language: 'ja',
   organization: '無印良品',
   areaCode: '0001',
   areaName: '大阪府堺市北区',

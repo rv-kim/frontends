@@ -1,19 +1,31 @@
+import { delay } from 'redux-saga'
 import { all, call, put, takeEvery } from 'redux-saga/effects'
-import { EventSearchType, initEnd } from '../modules/event-search'
+import { EventSearchType, ready, searchEnd } from '../modules/event-search'
 import EventSearchAPI from '../api/client/event-search'
 
-function* initSaga() {
+export function* initSaga() {
+  yield call(delay, 50)
   try {
     const {data} = yield call(EventSearchAPI.init)
-    yield put(initEnd(data))
+    yield put(ready(data))
   }
   catch(e) {
-    yield put(initEnd(e))
+    yield put(ready(e))
+  }
+}
+
+function* searchSaga() {
+  try {
+    const {data} = yield call(EventSearchAPI.search)
+    yield put(searchEnd(data))
+  }
+  catch(e) {
+    yield put(searchEnd(e))
   }
 }
 
 export default function* () {
   yield all([
-    takeEvery(EventSearchType.INIT_START, initSaga),
+    takeEvery(EventSearchType.SEARCH_START, searchSaga)
   ])
 }

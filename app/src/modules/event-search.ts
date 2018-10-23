@@ -4,8 +4,7 @@ import { Reducer } from 'redux'
 // Types
 
 export const EventSearchType = {
-  INIT_START:   'event-search/init-start',
-  INIT_END:     'event-search/init-end',
+  READY:        'event-search/ready',
   CHANGE_DATA:  'event-search/change-data',
   SEARCH_START: 'event-search/search-start',
   SEARCH_END:   'event-search/search-end',
@@ -35,6 +34,8 @@ export interface EventSearchState {
 export const EventSearchSerialize = state => state
 
 export const EventSearchDeserialize = (state: EventSearchState): EventSearchState => {
+  console.log('EventSearch#EventSearchDeserialize')
+  console.log(state)
   return {
     ...state,
     eventList: getListItems(state.eventList),
@@ -61,10 +62,8 @@ export class ListItem {
   get text(): string {return this._text}
 }
 
-export const getListItems = (data: Array<any>, hasHead: boolean = true): Array<ListItem> => {
-  let list = data.map((e) => ListItem.create(e))
-  hasHead && list.unshift(new ListItem('','',''))
-  return list
+export const getListItems = (data: Array<any>): Array<ListItem> => {
+  return data.map((e) => ListItem.create(e))
 }
 
 const initialState: EventSearchState = {
@@ -92,14 +91,14 @@ const initialState: EventSearchState = {
 // ---
 // Action Creators
 
-export const initStart = () => {
-  return { type: EventSearchType.INIT_START, state: initialState }
-}
+// export const initStart = () => {
+//   console.log('EventSearch#initStart')
+//   return { type: EventSearchType.INIT_START, state: initialState }
+// }
 
-export const initEnd = (data) => {
-  console.log('EventSearch#initEnd')
+export const ready = (data) => {
   return {
-    type: EventSearchType.INIT_END,
+    type: EventSearchType.READY,
     eventList: getListItems(data.eventList),
     eventCategoryList: getListItems(data.eventCategoryList),
     teacherList: getListItems(data.teacherList),
@@ -125,9 +124,7 @@ export const searchEnd = (list) => {
 
 export const EventSearchReducer: Reducer<EventSearchState> = (state = initialState, action) => {
   switch (action.type) {
-    case EventSearchType.INIT_START:
-      return {...action.state}
-    case EventSearchType.INIT_END:
+    case EventSearchType.READY:
       return {
         ...state,
         eventList: action.eventList,

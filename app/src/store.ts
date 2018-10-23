@@ -32,7 +32,7 @@ const reducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
 
 
 import { Store, Reducer, createStore, combineReducers, applyMiddleware } from 'redux'
-import createSagaMiddleware from './saga'
+import sagaMiddleware from './saga'
 
 
 const bindMiddleware = (middlewares) => {
@@ -45,15 +45,13 @@ const bindMiddleware = (middlewares) => {
 
 export default function (state: ApplicationState): Store<ApplicationState> {
 
-  const sagaMiddleware = createSagaMiddleware()
-
   const store: Store<ApplicationState> = createStore(
     reducers,
     state,
     bindMiddleware([sagaMiddleware.get()]),
   )
 
-  sagaMiddleware.runs()
+  sagaMiddleware.start()
 
   return store
 }
